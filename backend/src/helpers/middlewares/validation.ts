@@ -3,15 +3,12 @@ import { ErrorStyle } from "../validations/error";
 import { ZodObject } from "zod";
 
 export default async function BodyValidationMiddleware(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-  schema: ZodObject
-) {
+req: Request, res: Response, next: NextFunction, schema: ZodObject) {
   const validationResult = await schema.safeParseAsync(req.body);
 
   if (!validationResult.success) {
     const { error } = validationResult;
+    console.log(error);
     if (
       error.issues.some(
         (issue) => issue.path.length === 0 && issue.code === "invalid_type"

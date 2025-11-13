@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from "express";
 const app = express();
-
+app.use(express.json());
 
 
 declare global {
@@ -16,6 +16,9 @@ console.log("Starting server...");
 if (!process.env.PORT) throw new Error("PORT is not defined in .env");
 
 
+
+import router from "./routes";
+app.use("/", router);
 
 app.use(
   (

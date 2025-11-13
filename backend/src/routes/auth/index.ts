@@ -3,10 +3,12 @@ import { LoginSchema } from '../../helpers/validations/auth/login';
 import { RegisterSchema } from '../../helpers/validations/auth/register';
 import BodyValidationMiddleware from "../../helpers/middlewares/validation";
 import { db } from '../../database/db';
+import { CreateToken } from "../../helpers/email/verification";
 import { eq } from 'drizzle-orm';
 import { requireNoAuth } from '../../helpers/middlewares/auth';
 import { UsersTable } from '../../database';
 import { EncryptPassword } from '../../helpers/middlewares/encryptions/pass';
+
 
 const router = express.Router();
 
@@ -37,9 +39,13 @@ router.post('/register',
                 .values({
                     email,
                     password: EncryptPassword(password),
+                    name: `${username}`.trim() || null,
                     
                 })
                 .$returningId();
+                await CreateToken(email)
+                res.json({ success: true, data: { id: User.id } });
+            
       });
       
 export default router;

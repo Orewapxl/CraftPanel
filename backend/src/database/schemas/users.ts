@@ -1,7 +1,7 @@
 import { sql } from "drizzle-orm";
 import { boolean, mysqlTable, timestamp, varchar } from "drizzle-orm/mysql-core";
-import { email } from "zod";
-import { id } from "zod/v4/locales";
+
+
 
 
 export const UsersTable = mysqlTable("usersTable", {
