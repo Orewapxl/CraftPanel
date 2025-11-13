@@ -7,11 +7,57 @@ import { CreateToken } from "../../helpers/email/verification";
 import { eq } from 'drizzle-orm';
 import { requireNoAuth } from '../../helpers/middlewares/auth';
 import { UsersTable } from '../../database';
-import { EncryptPassword } from '../../helpers/middlewares/encryptions/pass';
+import { ComparePassword, EncryptPassword } from '../../helpers/middlewares/encryptions/pass';
+import { error } from 'console';
+import { sign } from 'crypto';
+import { signToken } from '../../helpers/jwt';
 
 
 const router = express.Router();
 
+
+// Login
+router.post('/login',
+    requireNoAuth,
+    (req, res, next) => BodyValidationMiddleware(req, res, next, LoginSchema),
+    async (req, res) => {
+        const { email, password } = req.body;
+
+        const [user] = await db
+            .select()
+            .from(UsersTable)
+            .where(eq(UsersTable.email, email));
+        if(!user)
+            return res.status(400).json({
+                success: false,
+                message: "Invalid email or password",
+                errors: {
+                    email: ["Invalid email or password"],
+                },
+            });
+        if(!ComparePassword(password, user.password))
+            return res.status(400).json({
+                success: false,
+                message: "Invalid email or password",
+                errors: {
+                    email: ["Invalid email or password"],
+                },
+            });
+        if(!user.emailVerified)
+            return res.status(400).json({
+                success: false,
+                message: "Email not verified",
+                errors: {
+                    email: ["Please verify your email before logging in."],
+                },
+            });
+
+            res.json({ success: true, data: { id: user.id, token: signToken(user.id) },
+         });
+    }
+);
+
+// Register
 router.post('/register',
      requireNoAuth,
      (req, res, next) => BodyValidationMiddleware(req, res, next, RegisterSchema),
