@@ -4,8 +4,31 @@ const app = express();
 
 
 
+declare global {
+  namespace Express {
+    interface Request {
+      user?: { id: string };
+      headers: Record<string, string>;
+    }
+  }
+}
 console.log("Starting server...");
 if (!process.env.PORT) throw new Error("PORT is not defined in .env");
+
+
+
+app.use(
+  (
+    err: any,
+    _req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    if (res.headersSent) return next(err);
+    console.error(err);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+);
 
 app.listen(process.env.PORT, ()=> {
     console.log(`Server is running on port ${process.env.PORT}`);
