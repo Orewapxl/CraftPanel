@@ -8,8 +8,6 @@ import { eq } from 'drizzle-orm';
 import { requireNoAuth } from '../../helpers/middlewares/auth';
 import { UsersTable } from '../../database';
 import { ComparePassword, EncryptPassword } from '../../helpers/middlewares/encryptions/pass';
-import { error } from 'console';
-import { sign } from 'crypto';
 import { signToken } from '../../helpers/jwt';
 
 
