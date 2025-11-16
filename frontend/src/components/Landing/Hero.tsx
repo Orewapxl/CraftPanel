@@ -66,7 +66,7 @@ export default function Hero() {
             </h1>
 
         <p
-          className={`text-lg text-slate-400 mb-12 max-w-2xl mx-auto transition-all duration-700 delay-300 ${
+          className={`text-lg text-slate-100 mb-12 max-w-2xl mx-auto transition-all duration-700 delay-300 ${
             isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
