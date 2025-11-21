@@ -9,9 +9,33 @@ import { requireNoAuth } from '../../helpers/middlewares/auth';
 import { UsersTable } from '../../database';
 import { ComparePassword, EncryptPassword } from '../../helpers/middlewares/encryptions/pass';
 import { signToken } from '../../helpers/jwt';
+import { connectionsTable } from '../../database/schemas/connections';
 
 
 const router = express.Router();
+
+// me
+router.get('/me', async (req, res) => {
+    if (!req.user) return res.json({});
+    const [user] = await db
+    .select({
+        ID: UsersTable.ID,
+        email: UsersTable.email,
+        profilePicture: UsersTable.ProfilePicture,
+        username: UsersTable.name,
+        emailVerified: UsersTable.emailVerified,
+        createdAt: UsersTable.createdAt
+    })
+    .from(UsersTable)
+    .where(eq(UsersTable.ID, req.user.ID));
+    
+
+    let connections = await db
+        .select()
+        .from(connectionsTable)
+        .where(eq(connectionsTable.userID, req.user.ID));
+}
+)
 
 
 // Login
@@ -50,7 +74,7 @@ router.post('/login',
                 },
             });
 
-            res.json({ success: true, data: { id: user.id, token: signToken(user.id) },
+            res.json({ success: true, data: { ID: user.ID, token: signToken(user.ID) },
          });
     }
 );
@@ -88,7 +112,7 @@ router.post('/register',
                 })
                 .$returningId();
                 await CreateToken(email)
-                res.json({ success: true, data: { id: User.id } });
+                res.json({ success: true, data: { ID: User.ID } });
             
       });
       

@@ -5,7 +5,7 @@ import { boolean, mysqlTable, timestamp, varchar } from "drizzle-orm/mysql-core"
 
 
 export const UsersTable = mysqlTable("usersTable", {
-    id: varchar("id", { length: 36 }).primaryKey().notNull().$default(() => crypto.randomUUID()),
+    ID: varchar("ID", { length: 36 }).primaryKey().notNull().$default(() => crypto.randomUUID()),
     email: varchar("email", { length: 255 }).notNull().unique(),
     password: varchar("password", { length: 255 }).notNull(),
     ProfilePicture: varchar("profilePicture", { length: 255 }),

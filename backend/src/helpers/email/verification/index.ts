@@ -19,8 +19,8 @@ export async function CreateToken(email: string){
         crypto.randomBytes(16).toString('hex');
         
         await db.insert(emailVerificationTable).values({
-            id:crypto.randomUUID(),
-            userId: user.id,
+            ID:crypto.randomUUID(),
+            userID: user.ID,
             token,
 });
 

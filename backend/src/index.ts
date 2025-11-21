@@ -7,7 +7,7 @@ app.use(express.json());
 declare global {
   namespace Express {
     interface Request {
-      user?: { id: string };
+      user?: { ID: string };
       headers: Record<string, string>;
     }
   }

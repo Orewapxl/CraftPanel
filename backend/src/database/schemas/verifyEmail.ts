@@ -7,9 +7,9 @@ import {
 import { UsersTable } from "./users";
 
 export const emailVerificationTable = mysqlTable("email_verifications", {
-  id: varchar("id", { length: 36 }).primaryKey().notNull(),
-  userId: varchar("user_id", { length: 36 })
-    .references(() => UsersTable.id, { onDelete: "cascade" })
+  ID: varchar("ID", { length: 36 }).primaryKey().notNull(),
+  userID: varchar("user_ID", { length: 36 })
+    .references(() => UsersTable.ID, { onDelete: "cascade" })
     .notNull(),
   token: varchar("token", { length: 255 }).notNull().unique(),
   createdAt: timestamp("created_at").defaultNow(),

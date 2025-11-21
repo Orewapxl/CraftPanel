@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { LoginUser } from "@/panel/utils/api/auth";
 import { setToken } from "../../utils/user";
 
@@ -39,7 +39,18 @@ useEffect(() => {
     }, [form]);
 
     return(
-        <div className="flex flex-1"
+        <div className="flex flex-1">
+            <div className="w-full md:w-2/5 flex items-center justify-center bg[#242424]/50 backdrop-blur-sm">
+            <div className="w-full max-w-mdmx-auto flex-col px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+                <h2 className="text-3x1 font-bold mb-6 text-white text-center">
+                    Login to Yout Account
+                </h2>
+                {registered === "true" && <p className="bg-green-400/20 border border-green-500 text-green-300 px-4 py-3 rounded mb-6 text-center">
+                    We’ve sent you a verification email — check your inbox to activate your account!
+                </p>}
+            </div>
+            </div>
+        </div>
     )
 
 
