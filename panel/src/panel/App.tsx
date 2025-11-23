@@ -9,4 +9,12 @@ function App(){
     const nav = useNavigate();
     if ( user.isLoading ) return ; <Loading />;
     if ( !user.data?.user && !path.startsWith("/auth")) nav('/auth/login?redirect=${encodeURIComponent(path)}');
+    return(
+        <Routes>
+            <Route path="/" element={<Navigate to={user?.data?.user ? "dashboard" : "auth/login"} replace={true} />}></Route>
+            <Route path="/auth/login" element={user?.data?.user ? <Navigate to="/" replace={true} /> : <Login /> }></Route>
+        </Routes>
+    )
 }
+
+export default App

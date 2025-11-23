@@ -39,7 +39,22 @@ useEffect(() => {
     }, [form]);
 
     return(
-        <div className="flex flex-1">
+        <div className="flex min-h-screen relative overflow-hidden font-sans text-white">
+            <div className="absolute inset-0 z-0"
+            style={{background: "url('bg.jpg')", backgroundSize: "cover", backgroundPosition: "center"}}>
+                <div className="absolute inset-0 bg-[#111]/80 backdrop-blur-sm"></div>
+            </div>
+
+            <div className="absolute inset-0 opacity-10">
+                <svg className="absolute w-full h-full">
+                    <defs>
+                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5"></path>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid)" className="text-lime-500"></rect>
+                </svg>
+            </div>
             <div className="w-full md:w-2/5 flex items-center justify-center bg[#242424]/50 backdrop-blur-sm">
             <div className="w-full max-w-mdmx-auto flex-col px-4 sm:px-6 lg:px-8 py-12 md:py-20">
                 <h2 className="text-3x1 font-bold mb-6 text-white text-center">
