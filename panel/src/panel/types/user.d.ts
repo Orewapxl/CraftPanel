@@ -1,6 +1,6 @@
 export type TypeUser = {
     ID: string;
-    name: string;
+    username: string;
     email: string;
     emailVerified: boolean;
     profilePicture: string;
