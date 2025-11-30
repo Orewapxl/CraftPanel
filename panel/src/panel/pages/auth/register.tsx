@@ -6,6 +6,8 @@ import { CreateUser } from "@/panel/utils/api/auth";
 
 const validate = (form: {[key: string]: string}) => {
     const errors: {[key: string]: string[]} = {};
+    if (!form.username.trim()) errors.username = ["Username is required."];
+    else if (!/^[a-zA-Z0-9_]+$/.test(form.username)) { errors.username = ["Username can only letters and numbers."];}
     if (!form.email.trim()) errors.email = ["Email is required."];
     else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/.test(form.email)) errors.email = ["Email is invalid."];
     if (!form.password) errors.password = ["Password is required."];
@@ -33,7 +35,7 @@ export default function Register() {
 
 useEffect(() => {
     setErrors({});
-    if (!form.email && !form.password) return;
+    if (!form. username && !form.email && !form.password) return;
     const validationErrors = validate(form);
     setErrors(validationErrors);
     }, [form]);
@@ -42,7 +44,7 @@ useEffect(() => {
         <div className="flex h-screen w-screen items-center justify-center bg-black overflow-hidden relative">
                 <div className="absolute top-0 left-0 w-full h-full z-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(132,204,22,0.15),rgba(255,255,255,0))]" />
                 <div className="px-2 w-screen h-screen justify-center items-center flex">
-                    <div className="bg-slate-950 p-8 max-w-lg w-full mx-auto flex flex-col gap-4 border-2 border-lime-500 hover:border-lime-400 rounded-none transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(132,204,22,0.4)]">
+                    <div className="bg-slate-950 p-8 max-w-lg w-full mx-auto flex flex-col gap-4 border-2 border-lime-500 hover:border-lime-400 rounded-none transition duration-500 hover:-translate-y-2 hover:shadow-[0_0_30px_-5px_rgba(132,204,22,0.4)]">
 
             <h1 className="font-bold text-3xl text-lime-400 tracking-wider">Register</h1>
 
@@ -50,12 +52,12 @@ useEffect(() => {
                 <div className="flex flex-col gap-1">
                     <label className="text-xs font-bold text-lime-500 uppercase tracking-widest">UserName</label>
                     {errors.username && <p className="text-red-400">{errors.username[0]}</p>}
-                    <div className="flex focus-within:ring-2 rounded-lg focus-within:ring-lime-400/50 transition-all">
+                    <div className="flex focus-within:ring-2 rounded-lg focus-within:ring-lime-400/50 transition">
                     <input
-                        type="username"
+                        type="text"
                         value={form.username}
                         onChange={(e) => setForm({ ...form, username: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg bg-slate-900/50 border-b-2 border-slate-950/20 text-white focus:outline-none focus:ring-lime-400/50 transition-all" />
+                        className="w-full px-4 py-3 rounded-lg bg-slate-900/50 border-b-2 border-slate-950/20 text-white focus:outline-none focus:ring-lime-400/50 transition" />
                     
                     </div>
                 </div>
@@ -63,31 +65,31 @@ useEffect(() => {
                 <div className="flex flex-col gap-1">
                     <label className="text-xs font-bold text-lime-500 uppercase tracking-widest">Email</label>
                     {errors.email && <p className="text-red-400">{errors.email[0]}</p>}
-                    <div className="flex focus-within:ring-2 rounded-lg focus-within:ring-lime-400/50 transition-all">
+                    <div className="flex focus-within:ring-2 rounded-lg focus-within:ring-lime-400/50 transition">
                     <input
                         type="email"
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className="w-full px-4 py-3 rounded-lg bg-slate-900/50 border-b-2 border-slate-950/20 text-white focus:outline-none focus:ring-lime-400/50 transition-all" />
+                        className="w-full px-4 py-3 rounded-lg bg-slate-900/50 border-b-2 border-slate-950/20 text-white focus:outline-none focus:ring-lime-400/50 transition" />
                     </div>
                 </div>
                 <div className="flex flex-col gap-1">
                     <label className="text-xs font-bold text-lime-500 uppercase tracking-widest">Password</label>
                     {errors.password && <p className="text-red-400">{errors.password[0]}</p>}
-                    <div className="flex focus-within:ring-2 rounded-lg focus-within:ring-lime-400/50 transition-all">
+                    <div className="flex focus-within:ring-2 rounded-lg focus-within:ring-lime-400/50 transition">
                     <input
                         type="password"
                         value={form.password}
                         onChange={(e) => setForm({ ...form, password: e.target.value })}
-                        className="px-4 py-3 rounded-l-lg w-full bg-slate-900/50 border-b-3 border-slate-950/20 text-white focus:outline-none transition-all" />
+                        className="px-4 py-3 rounded-l-lg w-full bg-slate-900/50 border-b-3 border-slate-950/20 text-white focus:outline-none transition" />
 
                     </div>
                     
                 </div>
                 <button
                     onClick={() => request()}
-                    disabled={Object.keys(errors).length > 0 || !form.email || !form.password}
-                    className="mt-6 w-full flex justify-center items-center gap-2 py-3 border-2 border-lime-500 text-lime-400 font-bold uppercase tracking-widest rounded-none hover:bg-lime-500 hover:text-black transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-[0_0_20px_rgba(132,204,22,0.6)]   ">
+                    disabled={Object.keys(errors).length > 0 || !form.username || !form.email || !form.password}
+                    className="mt-6 w-full flex justify-center items-center gap-2 py-3 border-2 border-lime-500 text-lime-400 font-bold uppercase tracking-widest rounded-none hover:bg-lime-500 hover:text-black transition duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-[0_0_20px_rgba(132,204,22,0.6)]   ">
                     <User className="w-5" />
                     Register
                     </button>

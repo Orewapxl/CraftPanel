@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export function CreateUser(email: string, password: string, username: string){
+export function CreateUser(username: string, email: string, password: string){
     return axios.post("/api/auth/register", {
+        username: !username ? undefined : username,
         email,
         password,
-        username: !username ? undefined : username
     });
 }
 

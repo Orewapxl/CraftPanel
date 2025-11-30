@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer";
 import fs from "fs";
+import dotenv from "dotenv";
+dotenv.config();
 
 const templates = {
   layout: fs.readFileSync(`${__dirname}/templates/layout.html`, "utf-8"),
@@ -18,6 +20,7 @@ export async function sendEmail(
   email: string,
   data: Record<string, string>
 ) {
+  
   data.APP_NAME = process.env.APP_NAME || "";
   const body = templates[template];
   const html = addLayout(body).replace(/{{(.*?)}}/g, (_, key) => {
@@ -29,7 +32,7 @@ export async function sendEmail(
     port: parseInt(process.env.SMTP_PORT || "587"),
     secure: process.env.SMTP_SECURE === "true",
     auth: {
-      user: process.env.SMTP_USER,
+      user: process.env.SMTP_NAME,
       pass: process.env.SMTP_PASS,
     },
   });

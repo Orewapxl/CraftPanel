@@ -20,9 +20,9 @@ router.get('/me', async (req, res) => {
     const [user] = await db
     .select({
         ID: UsersTable.ID,
+        username: UsersTable.username,
         email: UsersTable.email,
         profilePicture: UsersTable.ProfilePicture,
-        username: UsersTable.name,
         emailVerified: UsersTable.emailVerified,
         createdAt: UsersTable.createdAt
     })
@@ -107,7 +107,7 @@ router.post('/register',
                 .values({
                     email,
                     password: EncryptPassword(password),
-                    name: `${username}`.trim() || null,
+                    username: `${username}`.trim() || null,
                     
                 })
                 .$returningId();

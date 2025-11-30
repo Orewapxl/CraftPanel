@@ -1,7 +1,6 @@
 import { json, mysqlTable, timestamp, varchar} from "drizzle-orm/mysql-core";
 import { UsersTable } from "./users";
 import { sql } from "drizzle-orm";
-import { id } from "zod/v4/locales";
 
 export const connectionsTable = mysqlTable("conncetions", {
     ID: varchar("ID", {length: 36})
